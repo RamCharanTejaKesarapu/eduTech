@@ -9,6 +9,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
+st.set_page_config(
+    page_title="Student Retention • EduTech",
+    page_icon="🎯",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -20,6 +27,8 @@ from components.kpi_cards import render_kpi_card, render_page_header
 from components.filters import render_sidebar_filters
 from components.theme import apply_editorial_theme, INK, EARTH, BRASS, VERMILION, MOSS
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("Retention")
 
@@ -154,3 +163,8 @@ vulnerable_df = filtered_schools[filtered_schools['srdri_risk_level'].isin(['Cri
 ].head(20)
 
 st.dataframe(vulnerable_df, hide_index=True, use_container_width=True)
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()
+

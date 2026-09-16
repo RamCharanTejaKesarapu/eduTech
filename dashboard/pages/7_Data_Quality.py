@@ -9,6 +9,13 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
+st.set_page_config(
+    page_title="Data Quality & Audit • EduTech",
+    page_icon="🔍",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -18,6 +25,8 @@ if os.path.exists(css_path):
 from components.data_loader import load_data_quality_log, run_query
 from components.kpi_cards import render_kpi_card, render_page_header
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("Quality")
 
@@ -170,3 +179,7 @@ if not df_audit.empty:
     )
 else:
     st.info("Quality audit records are recorded in the data pipeline audit log.")
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()

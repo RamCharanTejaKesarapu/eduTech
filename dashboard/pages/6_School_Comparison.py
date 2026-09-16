@@ -9,6 +9,13 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
+st.set_page_config(
+    page_title="School & District Comparison • EduTech",
+    page_icon="⚖️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -18,6 +25,8 @@ if os.path.exists(css_path):
 from components.data_loader import load_district_summary, load_school_risk_marts
 from components.kpi_cards import render_page_header
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("Compare")
 
@@ -113,3 +122,7 @@ with tab2:
         st.markdown("#### Side-by-Side School Diagnostic Matrix")
         s_comp_df = pd.DataFrame(school_metrics)
         st.dataframe(s_comp_df, hide_index=True, use_container_width=True)
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()

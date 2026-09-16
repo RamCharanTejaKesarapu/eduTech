@@ -8,6 +8,13 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
+st.set_page_config(
+    page_title="Executive Overview • EduTech",
+    page_icon="📋",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -19,6 +26,8 @@ from components.kpi_cards import render_kpi_card, render_page_header
 from components.filters import render_sidebar_filters
 from components.theme import apply_editorial_theme, INK, EARTH, MOSS, VERMILION, BRASS
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("Executive")
 
@@ -99,8 +108,7 @@ fig_scatter = px.scatter(
     color='district',
     size='total_enrolled_students',
     hover_name='school_name',
-    labels={'avg_infra_score': 'Infrastructure Score (0-100)', 'avg_attendance_rate_pct': 'Attendance Rate (%)'},
-    trendline='ols'
+    labels={'avg_infra_score': 'Infrastructure Score (0-100)', 'avg_attendance_rate_pct': 'Attendance Rate (%)'}
 )
 fig_scatter = apply_editorial_theme(fig_scatter)
 st.plotly_chart(fig_scatter, use_container_width=True)
@@ -114,3 +122,8 @@ st.download_button(
     file_name="executive_schools_summary.csv",
     mime="text/csv"
 )
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()
+

@@ -2,29 +2,52 @@
 dashboard/components/top_nav.py
 Editorial Top Masthead & Navigation System.
 Implements the Meng To Sketchbook aesthetic (Instrument Serif, Newsreader, Warm Paper & Charcoal Ink)
-and utilizes top space for project branding, live intelligence status, and one-click navigation buttons.
+with top project branding, live intelligence status, circular PFP icon button, and 9 fast page links.
 """
 
+import os
+import base64
 import streamlit as st
+
+
+def _get_pfp_base64() -> str:
+    """Load and base64-encode the creator profile picture."""
+    asset_path = os.path.join(os.path.dirname(__file__), "..", "assets", "creator_pfp.png")
+    if os.path.exists(asset_path):
+        with open(asset_path, "rb") as f:
+            return base64.b64encode(f.read()).decode("utf-8")
+    return ""
+
 
 def render_top_masthead(active_page: str = "Home"):
     """
     Renders an editorial top navigation bar and project masthead
-    that eliminates wasted top spacing and unifies navigation across all pages.
+    that eliminates wasted top spacing and provides a circular PFP icon button.
     """
-    st.markdown("""
-    <div class="editorial-top-masthead">
-        <div class="top-meta-row">
-            <span class="top-kicker">State Education Department • Government of Punjab</span>
-            <span class="top-live-badge">🟢 600 Schools Audited • 20,000 Records • Real-Time Warehouse</span>
-        </div>
-        <div class="top-title-row">
-            <h1 class="top-project-title">Student Retention & Welfare Efficacy Tracker</h1>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    pfp_b64 = _get_pfp_base64()
+    pfp_img_tag = (
+        f'<img src="data:image/png;base64,{pfp_b64}" alt="Architect" class="top-pfp-icon-img" />'
+        if pfp_b64
+        else '<span class="top-pfp-initials">RC</span>'
+    )
 
-    # Fast Navigation Bar using Streamlit's native st.page_link
+    masthead_elements = [
+        '<div class="editorial-top-masthead">',
+        '<div class="top-meta-row">',
+        '<span class="top-kicker">State Education Department • Government of Punjab</span>',
+        '<div class="top-actions-cluster">',
+        '<span class="top-live-badge">🟢 600 Schools Audited • 20,000 Records • Real-Time Warehouse</span>',
+        f'<a href="#architect-section" class="top-pfp-icon-btn" title="The Architect: Ram Charan Teja">{pfp_img_tag}</a>',
+        '</div>',
+        '</div>',
+        '<div class="top-title-row">',
+        '<h1 class="top-project-title">Student Retention & Welfare Efficacy Tracker</h1>',
+        '</div>',
+        '</div>'
+    ]
+    st.markdown("".join(masthead_elements), unsafe_allow_html=True)
+
+    # 9 wide navigation buttons across the page
     nav_cols = st.columns(9)
     with nav_cols[0]:
         st.page_link("app.py", label="Overview", icon="🏛️", use_container_width=True)

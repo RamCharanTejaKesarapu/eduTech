@@ -32,12 +32,12 @@ from components.data_loader import (
 from components.kpi_cards import render_kpi_card, render_page_header
 from components.filters import render_sidebar_filters
 
-from components.theme import (
-    apply_editorial_theme, INK, PAPER_CARD, HAIRLINE, EARTH, BRASS, VERMILION, MOSS
-)
+from components.theme import apply_editorial_theme, INK, EARTH, BRASS, VERMILION, MOSS
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
-# Top Masthead & Navigation Buttons
+# Render top masthead
 render_top_masthead(active_page="Overview")
 
 # Load data
@@ -170,5 +170,6 @@ st.dataframe(
     use_container_width=True
 )
 
-st.markdown("---")
-st.info("💡 **Navigation Guide:** Use the left sidebar to navigate across all 8 dedicated analytical modules: **Student Retention**, **Attendance & Academics**, **Mid-Day Meal**, **Infrastructure**, **School Comparison**, **Data Quality**, and the **AI Analyst**.")
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()

@@ -8,6 +8,13 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
+st.set_page_config(
+    page_title="Attendance & Academics • EduTech",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -22,6 +29,8 @@ from components.data_loader import (
 from components.kpi_cards import render_kpi_card, render_page_header
 from components.theme import apply_editorial_theme, INK, EARTH, BRASS, VERMILION, MOSS
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("Attendance")
 
@@ -181,3 +190,7 @@ fig_grade = px.bar(
 )
 fig_grade = apply_editorial_theme(fig_grade)
 st.plotly_chart(fig_grade, use_container_width=True)
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()

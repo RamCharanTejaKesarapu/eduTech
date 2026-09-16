@@ -8,6 +8,13 @@ import sys
 import streamlit as st
 import pandas as pd
 
+st.set_page_config(
+    page_title="AI Graph-First Analyst • EduTech",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load CSS
 css_path = os.path.join(os.path.dirname(__file__), "..", "styles.css")
 if os.path.exists(css_path):
@@ -22,6 +29,8 @@ if proj_root not in sys.path:
 from agent.ai_analyst import agent_instance
 from components.kpi_cards import render_page_header
 from components.top_nav import render_top_masthead
+from components.creator_card import render_creator_card
+from components.footer import render_editorial_footer
 
 render_top_masthead("AI Agent")
 
@@ -116,3 +125,7 @@ if (run_button or prompt_choice) and user_query:
         if res.get('result_df') is not None and not res['result_df'].empty:
             with st.expander(f"📋 Analytical Result Dataset ({len(res['result_df'])} records)", expanded=False):
                 st.dataframe(res['result_df'], use_container_width=True)
+
+# Render The Architect (Creator Profile) and Project Reference Mega-Footer
+render_creator_card()
+render_editorial_footer()
