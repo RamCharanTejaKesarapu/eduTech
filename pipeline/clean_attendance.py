@@ -22,6 +22,15 @@ ROMAN_TO_INT_GRADE = {
     '6': '6', '7': '7', '8': '8', '9': '9', '10': '10'
 }
 
+def normalize_grade(val):
+    """
+    Standardizes grade representations converting Roman numerals (I-X) or integers to string digits.
+    """
+    if pd.isna(val) or val is None:
+        return None
+    s = str(val).strip()
+    return ROMAN_TO_INT_GRADE.get(s, s)
+
 def clean_student_attendance():
     raw_dir = get_raw_data_dir()
     filepath = os.path.join(raw_dir, "track4_student_attendance.csv")
@@ -42,13 +51,13 @@ def clean_student_attendance():
     df['school_id_clean'] = df['school_id'].apply(normalize_school_id)
 
     # 4. Parse Dates & Day of Week
-    parsed_dates = pd.to_datetime(df['date'], format='mixed', errors='coerce')
-    df['attendance_date'] = parsed_dates.dt.strftime('%Y-%m-%d')
+    df['attendance_date'] = parse_date_to_iso(df['date'])
+    parsed_dates = pd.to_datetime(df['attendance_date'], errors='coerce')
     df['day_of_week'] = parsed_dates.dt.day_name()
     df['is_sunday'] = df['day_of_week'] == 'Sunday'
 
     # 5. Normalize Grade
-    df['grade_clean'] = df['grade'].astype(str).str.strip().map(ROMAN_TO_INT_GRADE).fillna(df['grade'].astype(str).str.strip())
+    df['grade_clean'] = df['grade'].apply(normalize_grade)
 
     # 6. Numeric Counts & Validation
     df['total_students'] = pd.to_numeric(df['total_students'], errors='coerce').fillna(0).astype(int)

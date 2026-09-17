@@ -5,7 +5,9 @@ Unit tests for data normalization, cleaning, and validation functions.
 
 import pytest
 import numpy as np
-from pipeline.utils import normalize_school_id, normalize_boolean
+import pandas as pd
+from pipeline.utils import normalize_school_id, normalize_boolean, parse_date_to_iso
+from pipeline.clean_attendance import normalize_grade
 from pipeline.clean_mdm import parse_mdm_quantity, parse_mdm_cost
 from pipeline.clean_test_scores import normalize_fln_score
 
@@ -84,3 +86,32 @@ def test_normalize_fln_score():
     assert normalize_fln_score('63.4%', 'Percentage') == 63.4
     assert normalize_fln_score('88.1%', 'pct') == 88.1
     assert normalize_fln_score('77.3%', '%') == 77.3
+
+def test_parse_date_to_iso():
+    # ISO and delimited formats
+    assert parse_date_to_iso("2024-03-15") == "2024-03-15"
+    assert parse_date_to_iso("15-03-2024") == "2024-03-15"
+    assert parse_date_to_iso("2024/03/15") == "2024-03-15"
+    assert parse_date_to_iso(None) is None
+    assert parse_date_to_iso(np.nan) is None
+
+    # Series handling
+    series = pd.Series(["2024-01-10", "2024-02-20", None])
+    res = parse_date_to_iso(series)
+    assert res.iloc[0] == "2024-01-10"
+    assert res.iloc[1] == "2024-02-20"
+    assert pd.isna(res.iloc[2])
+
+def test_normalize_grade():
+    # Roman numeral mapping
+    assert normalize_grade("I") == "1"
+    assert normalize_grade("V") == "5"
+    assert normalize_grade("X") == "10"
+    assert normalize_grade("  IV  ") == "4"
+
+    # Digits and unchanged strings
+    assert normalize_grade("1") == "1"
+    assert normalize_grade("10") == "10"
+    assert normalize_grade(None) is None
+    assert normalize_grade(np.nan) is None
+

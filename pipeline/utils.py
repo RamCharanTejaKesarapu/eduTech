@@ -74,12 +74,19 @@ def normalize_boolean(val):
     return None
 
 # Date parser
-def parse_date_to_iso(series):
+def parse_date_to_iso(val):
     """
-    Parses mixed date strings (DD.MM.YYYY, MM-DD-YYYY, YYYY/MM/DD, DD-Mon-YYYY) into ISO YYYY-MM-DD.
+    Parses mixed date strings or Series (DD.MM.YYYY, MM-DD-YYYY, YYYY/MM/DD, DD-Mon-YYYY) into ISO YYYY-MM-DD.
     """
-    parsed = pd.to_datetime(series, format='mixed', errors='coerce')
-    return parsed.dt.strftime('%Y-%m-%d')
+    if val is None or (isinstance(val, float) and np.isnan(val)):
+        return None
+    if isinstance(val, (pd.Series, pd.Index)):
+        parsed = pd.to_datetime(val, format='mixed', errors='coerce')
+        return parsed.dt.strftime('%Y-%m-%d')
+    parsed = pd.to_datetime(val, format='mixed', errors='coerce')
+    if pd.isna(parsed):
+        return None
+    return parsed.strftime('%Y-%m-%d')
 
 # Data Quality Audit Logger
 class DataQualityAudit:

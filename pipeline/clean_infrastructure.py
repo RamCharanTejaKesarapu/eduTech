@@ -37,8 +37,7 @@ def clean_school_infrastructure():
     df['school_id_clean'] = df['school_id'].apply(normalize_school_id)
 
     # 3. Parse Dates
-    parsed_dates = pd.to_datetime(df['date'], format='mixed', errors='coerce')
-    df['inspection_date'] = parsed_dates.dt.strftime('%Y-%m-%d')
+    df['inspection_date'] = parse_date_to_iso(df['date'])
 
     # 4. Standardize Booleans
     boolean_clean_cols = {}

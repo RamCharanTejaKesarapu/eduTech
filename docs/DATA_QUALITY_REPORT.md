@@ -1,7 +1,7 @@
 # Data Quality & Pipeline Audit Report
 **TransOrg Datathon - Track 4: Education & EdTech**
 Project: **Student Retention & Welfare Efficacy Tracker**
-Generated At: `2026-09-15 22:18:13`
+Generated At: `2026-09-17 14:36:13`
 
 ## 1. Pipeline Execution Summary
 | Dataset | Raw Records | Clean Records | Duplicate Records Removed | Key Anomaly Metrics |
@@ -22,31 +22,31 @@ Generated At: `2026-09-15 22:18:13`
 
 | dataset | record_id | column_name | issue_type | raw_value | corrected_value | quality_status | timestamp |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| school_master | SCH0205 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-15T22:18:11.912088 |
-| school_master | SCH0453 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-15T22:18:11.912381 |
-| school_master | SCH0182 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-15T22:18:11.912638 |
-| school_master | SCH0279 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-15T22:18:11.912877 |
-| school_master | SCH0330 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-15T22:18:11.913101 |
-| school_master | SCH0085 | district | UNRESOLVED_MISSING_DISTRICT | nan | Unassigned | SUSPICIOUS | 2026-09-15T22:18:11.913320 |
-| school_master | SCH0491 | district | MISSING_VALUE_IMPUTED | nan | Sangrur | CORRECTED | 2026-09-15T22:18:11.913537 |
-| school_master | SCH0519 | district | MISSING_VALUE_IMPUTED | nan | Bathinda | CORRECTED | 2026-09-15T22:18:11.913747 |
-| school_master | SCH0582 | district | MISSING_VALUE_IMPUTED | nan | Patiala | CORRECTED | 2026-09-15T22:18:11.913956 |
-| school_master | SCH0026 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-15T22:18:11.914164 |
-| school_master | SCH0355 | district | MISSING_VALUE_IMPUTED | nan | Jalandhar | CORRECTED | 2026-09-15T22:18:11.914374 |
-| school_master | SCH0169 | district | UNRESOLVED_MISSING_DISTRICT | nan | Unassigned | SUSPICIOUS | 2026-09-15T22:18:11.914588 |
-| school_master | SCH0381 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-15T22:18:11.914809 |
-| school_master | SCH0480 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-15T22:18:11.915030 |
-| school_master | SCH0307 | district | MISSING_VALUE_IMPUTED | nan | Patiala | CORRECTED | 2026-09-15T22:18:11.915238 |
-| school_master | SCH0233 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-15T22:18:11.915441 |
-| school_master | SCH0352 | district | MISSING_VALUE_IMPUTED | nan | Jalandhar | CORRECTED | 2026-09-15T22:18:11.915646 |
-| school_master | SCH0002 | district | MISSING_VALUE_IMPUTED | nan | Amritsar | CORRECTED | 2026-09-15T22:18:11.915849 |
-| school_master | SCH0576 | district | MISSING_VALUE_IMPUTED | nan | Amritsar | CORRECTED | 2026-09-15T22:18:11.916054 |
-| school_master | SCH0316 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-15T22:18:11.916256 |
-| school_master | SCH0563 | district | MISSING_VALUE_IMPUTED | nan | Bathinda | CORRECTED | 2026-09-15T22:18:11.916460 |
-| school_master | SCH0561 | district | MISSING_VALUE_IMPUTED | nan | Sangrur | CORRECTED | 2026-09-15T22:18:11.916648 |
-| student_attendance | ATT0001394 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2025-09-07, Present: 183/183 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-15T22:18:12.021857 |
-| student_attendance | ATT0003932 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2025-11-09, Present: 296/296 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-15T22:18:12.021884 |
-| student_attendance | ATT0016450 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2026-03-22, Present: 236/236 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-15T22:18:12.021903 |
+| school_master | SCH0205 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-17T14:36:11.593806 |
+| school_master | SCH0453 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-17T14:36:11.594104 |
+| school_master | SCH0182 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-17T14:36:11.594349 |
+| school_master | SCH0279 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-17T14:36:11.594575 |
+| school_master | SCH0330 | district | MISSING_VALUE_IMPUTED | nan | Moga | CORRECTED | 2026-09-17T14:36:11.594801 |
+| school_master | SCH0085 | district | UNRESOLVED_MISSING_DISTRICT | nan | Unassigned | SUSPICIOUS | 2026-09-17T14:36:11.595023 |
+| school_master | SCH0491 | district | MISSING_VALUE_IMPUTED | nan | Sangrur | CORRECTED | 2026-09-17T14:36:11.595241 |
+| school_master | SCH0519 | district | MISSING_VALUE_IMPUTED | nan | Bathinda | CORRECTED | 2026-09-17T14:36:11.595448 |
+| school_master | SCH0582 | district | MISSING_VALUE_IMPUTED | nan | Patiala | CORRECTED | 2026-09-17T14:36:11.595659 |
+| school_master | SCH0026 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-17T14:36:11.595872 |
+| school_master | SCH0355 | district | MISSING_VALUE_IMPUTED | nan | Jalandhar | CORRECTED | 2026-09-17T14:36:11.596082 |
+| school_master | SCH0169 | district | UNRESOLVED_MISSING_DISTRICT | nan | Unassigned | SUSPICIOUS | 2026-09-17T14:36:11.596295 |
+| school_master | SCH0381 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-17T14:36:11.596504 |
+| school_master | SCH0480 | district | MISSING_VALUE_IMPUTED | nan | Ferozepur | CORRECTED | 2026-09-17T14:36:11.596714 |
+| school_master | SCH0307 | district | MISSING_VALUE_IMPUTED | nan | Patiala | CORRECTED | 2026-09-17T14:36:11.596921 |
+| school_master | SCH0233 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-17T14:36:11.597125 |
+| school_master | SCH0352 | district | MISSING_VALUE_IMPUTED | nan | Jalandhar | CORRECTED | 2026-09-17T14:36:11.597329 |
+| school_master | SCH0002 | district | MISSING_VALUE_IMPUTED | nan | Amritsar | CORRECTED | 2026-09-17T14:36:11.597540 |
+| school_master | SCH0576 | district | MISSING_VALUE_IMPUTED | nan | Amritsar | CORRECTED | 2026-09-17T14:36:11.597746 |
+| school_master | SCH0316 | district | MISSING_VALUE_IMPUTED | nan | Ludhiana | CORRECTED | 2026-09-17T14:36:11.597951 |
+| school_master | SCH0563 | district | MISSING_VALUE_IMPUTED | nan | Bathinda | CORRECTED | 2026-09-17T14:36:11.598159 |
+| school_master | SCH0561 | district | MISSING_VALUE_IMPUTED | nan | Sangrur | CORRECTED | 2026-09-17T14:36:11.598348 |
+| student_attendance | ATT0001394 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2025-09-07, Present: 183/183 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-17T14:36:11.710843 |
+| student_attendance | ATT0003932 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2025-11-09, Present: 296/296 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-17T14:36:11.710868 |
+| student_attendance | ATT0016450 | present_students | PROXY_ATTENDANCE_SUNDAY_100PCT | Date: 2026-03-22, Present: 236/236 | Flagged as SUSPICIOUS_PROXY | SUSPICIOUS | 2026-09-17T14:36:11.710887 |
 
 
 ## 3. Transformations & Normalization Verification
