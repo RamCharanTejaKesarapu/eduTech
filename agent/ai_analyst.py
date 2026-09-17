@@ -6,6 +6,7 @@ DuckDB query execution, and interactive Plotly chart rendering.
 """
 
 import os
+from typing import Optional, Tuple, Dict, Any
 import duckdb
 import pandas as pd
 from .intent_detector import detect_query_intent
@@ -13,15 +14,42 @@ from .sql_generator import generate_analytical_sql
 from .sql_guardrails import validate_sql_query
 from .chart_selector import generate_graph_first_chart
 
-def get_duckdb_path():
+def get_duckdb_path() -> str:
     proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     return os.path.join(proj_root, "data", "processed", "education_data.duckdb")
 
 class AIAnalystAgent:
-    def __init__(self, db_path: str = None):
+    def __init__(self, db_path: Optional[str] = None):
         self.db_path = db_path or get_duckdb_path()
 
-    def answer_question(self, user_question: str) -> dict:
+    def is_database_available(self) -> bool:
+        """
+        Checks whether the DuckDB analytical database exists and is readable.
+        """
+        if not os.path.exists(self.db_path):
+            return False
+        try:
+            con = duckdb.connect(self.db_path, read_only=True)
+            con.close()
+            return True
+        except Exception:
+            return False
+
+    def execute_safe_query(self, sql_query: str) -> pd.DataFrame:
+        """
+        Validates SQL against guardrails and executes it read-only on DuckDB.
+        Raises ValueError if query violates guardrails or runtime error on DB failure.
+        """
+        is_safe, error_msg = validate_sql_query(sql_query)
+        if not is_safe:
+            raise ValueError(f"SQL Guardrail Violation: {error_msg}")
+        con = duckdb.connect(self.db_path, read_only=True)
+        try:
+            return con.execute(sql_query).df()
+        finally:
+            con.close()
+
+    def answer_question(self, user_question: str) -> Dict[str, Any]:
         """
         Processes a natural language question through the Graph-First AI Pipeline.
         """
@@ -57,9 +85,7 @@ class AIAnalystAgent:
 
         # 4. DuckDB Analytical Execution
         try:
-            con = duckdb.connect(self.db_path, read_only=True)
-            result_df = con.execute(sql_query).df()
-            con.close()
+            result_df = self.execute_safe_query(sql_query)
         except Exception as e:
             return {
                 'is_success': False,

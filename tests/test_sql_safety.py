@@ -55,3 +55,18 @@ def test_multiple_queries_blocked():
     multi = "SELECT * FROM dim_school; DROP TABLE fct_attendance;"
     is_safe, err = validate_sql_query(multi)
     assert not is_safe, "Multi-statement injection was not blocked"
+
+def test_ai_analyst_agent_safety():
+    from agent.ai_analyst import AIAnalystAgent
+    agent = AIAnalystAgent()
+    assert agent.is_database_available(), "Database should be accessible"
+
+    # Empty question handled safely
+    res_empty = agent.answer_question("")
+    assert not res_empty['is_success']
+    assert res_empty['intent'] == 'empty'
+
+    # Unsafe query execution blocked
+    with pytest.raises(ValueError, match="SQL Guardrail Violation"):
+        agent.execute_safe_query("DROP TABLE dim_school;")
+
