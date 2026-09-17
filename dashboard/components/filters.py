@@ -3,10 +3,35 @@ dashboard/components/filters.py
 Sidebar filters component for the Streamlit dashboard.
 """
 
+from typing import Tuple, Dict, List, Any, Optional
 import streamlit as st
 import pandas as pd
 
-def render_sidebar_filters(df_schools: pd.DataFrame):
+def filter_school_dataframe(
+    df: pd.DataFrame,
+    districts: Optional[List[str]] = None,
+    types: Optional[List[str]] = None,
+    mediums: Optional[List[str]] = None
+) -> pd.DataFrame:
+    """
+    Applies multi-dimensional analytical filters across school master dataset.
+    """
+    filtered = df.copy()
+    if districts:
+        filtered = filtered[filtered['district'].isin(districts)]
+    if types:
+        filtered = filtered[filtered['school_type'].isin(types)]
+    if mediums:
+        filtered = filtered[filtered['medium'].isin(mediums)]
+    return filtered
+
+def is_filter_active(active_filters: Dict[str, Any]) -> bool:
+    """
+    Returns True if any filter criteria (districts, types, mediums) has selections.
+    """
+    return any(bool(v) for v in active_filters.values())
+
+def render_sidebar_filters(df_schools: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     st.sidebar.markdown("### 🔍 Global Analytical Filters")
 
     # 1. District filter
@@ -33,22 +58,22 @@ def render_sidebar_filters(df_schools: pd.DataFrame):
         default=[]
     )
 
-    filtered_df = df_schools.copy()
-    if selected_districts:
-        filtered_df = filtered_df[filtered_df['district'].isin(selected_districts)]
-    if selected_types:
-        filtered_df = filtered_df[filtered_df['school_type'].isin(selected_types)]
-    if selected_mediums:
-        filtered_df = filtered_df[filtered_df['medium'].isin(selected_mediums)]
-
     active_filters = {
         'districts': selected_districts,
         'types': selected_types,
         'mediums': selected_mediums
     }
 
+    filtered_df = filter_school_dataframe(
+        df_schools,
+        districts=selected_districts,
+        types=selected_types,
+        mediums=selected_mediums
+    )
+
     st.sidebar.markdown("---")
-    st.sidebar.markdown(f"**Schools Selected:** `{len(filtered_df):,} / {len(df_schools):,}`")
+    filter_status = "*(Filtered)*" if is_filter_active(active_filters) else "*(All)*"
+    st.sidebar.markdown(f"**Schools Selected:** `{len(filtered_df):,} / {len(df_schools):,}` {filter_status}")
 
     sidebar_html = [
         '<div style="background: rgba(253, 251, 247, 0.95); border: 1px solid rgba(43, 39, 33, 0.12); border-left: 3px solid #b8332a; border-radius: 8px; padding: 14px; margin-top: 15px; box-shadow: 0 2px 8px rgba(43, 39, 33, 0.04);">',
