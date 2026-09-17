@@ -12,6 +12,7 @@ from .utils import (
     get_raw_data_dir,
     get_processed_data_dir,
     normalize_school_id,
+    parse_date_to_iso,
     audit_logger
 )
 
@@ -25,6 +26,15 @@ SUBJECT_MAP = {
     'Punjabi': 'Punjabi',
     'EVS': 'EVS'
 }
+
+def normalize_subject(val):
+    """
+    Standardizes school subjects into canonical names (e.g. Ganit/Math -> Mathematics).
+    """
+    if pd.isna(val) or val is None:
+        return None
+    s = str(val).strip()
+    return SUBJECT_MAP.get(s, s)
 
 LETTER_GRADE_MAP = {
     'A+': 95.0,
@@ -101,11 +111,10 @@ def clean_test_scores():
     df['school_id_clean'] = df['school_id'].apply(normalize_school_id)
 
     # 3. Parse Dates
-    parsed_dates = pd.to_datetime(df['date'], format='mixed', errors='coerce')
-    df['assessment_date'] = parsed_dates.dt.strftime('%Y-%m-%d')
+    df['assessment_date'] = parse_date_to_iso(df['date'])
 
     # 4. Standardize Subject
-    df['subject_clean'] = df['subject'].astype(str).str.strip().map(SUBJECT_MAP).fillna(df['subject'])
+    df['subject_clean'] = df['subject'].apply(normalize_subject)
 
     # 5. Standardize Score to Percentage (0 to 100)
     df['score_percentage'] = [

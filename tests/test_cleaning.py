@@ -9,7 +9,7 @@ import pandas as pd
 from pipeline.utils import normalize_school_id, normalize_boolean, parse_date_to_iso
 from pipeline.clean_attendance import normalize_grade
 from pipeline.clean_mdm import parse_mdm_quantity, parse_mdm_cost
-from pipeline.clean_test_scores import normalize_fln_score
+from pipeline.clean_test_scores import normalize_fln_score, normalize_subject
 
 def test_normalize_school_id():
     assert normalize_school_id("SCH0050") == "SCH0050"
@@ -114,4 +114,14 @@ def test_normalize_grade():
     assert normalize_grade("10") == "10"
     assert normalize_grade(None) is None
     assert normalize_grade(np.nan) is None
+
+def test_normalize_subject():
+    assert normalize_subject("Math") == "Mathematics"
+    assert normalize_subject("Ganit") == "Mathematics"
+    assert normalize_subject("Mathematics") == "Mathematics"
+    assert normalize_subject("Science") == "Science"
+    assert normalize_subject("  Punjabi  ") == "Punjabi"
+    assert normalize_subject(None) is None
+    assert normalize_subject(np.nan) is None
+
 

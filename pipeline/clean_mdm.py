@@ -11,6 +11,7 @@ from .utils import (
     get_raw_data_dir,
     get_processed_data_dir,
     normalize_school_id,
+    parse_date_to_iso,
     audit_logger
 )
 
@@ -134,8 +135,8 @@ def clean_mid_day_meal():
     df['school_id_clean'] = df['school_id'].apply(normalize_school_id)
 
     # 3. Parse Dates
-    parsed_dates = pd.to_datetime(df['date'], format='mixed', errors='coerce')
-    df['procurement_date'] = parsed_dates.dt.strftime('%Y-%m-%d')
+    df['procurement_date'] = parse_date_to_iso(df['date'])
+    parsed_dates = pd.to_datetime(df['procurement_date'], errors='coerce')
     df['day_of_week'] = parsed_dates.dt.day_name()
     df['is_sunday_procurement'] = (df['day_of_week'] == 'Sunday').astype(int)
 
